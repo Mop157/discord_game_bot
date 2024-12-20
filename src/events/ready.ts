@@ -1,11 +1,11 @@
 import { config } from '../config';
 import { Routes } from 'discord-api-types/v9';
 import fs from 'fs';
-import { ExtendedClient } from '../types';
+import { ExtendedClient } from '../index';
 import path from 'path';
 import { REST } from '@discordjs/rest';
 
-module.exports = {
+export default {
   name: 'ready',
   once: true,
   async execute(client: ExtendedClient) {

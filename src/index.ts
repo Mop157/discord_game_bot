@@ -1,9 +1,15 @@
 import { Client, GatewayIntentBits, Collection } from 'discord.js';
-import { config } from './config';
-import { connectDatabase } from './utils/database';
 import fs from 'fs';
 import path from 'path';
-import { ExtendedClient } from './types';
+
+import { config } from './config';
+import { connectDatabase } from './utils/database';
+
+export interface ExtendedClient extends Client {
+  slashCommands: Collection<string, any>;
+  prefixCommands: Collection<string, any>;
+  buttons: Collection<string, any>;
+}
 
 const client: ExtendedClient = new Client({
   intents: [
@@ -75,7 +81,7 @@ client.on('interactionCreate', async interaction => {
 });
 
 // Handle prefix commands
-const prefix = '!'; // You can change this to your desired prefix
+const prefix = config.prefix;
 client.on('messageCreate', message => {
   if (!message.content.startsWith(prefix) || message.author.bot) return;
 

@@ -7,4 +7,5 @@ export const config = {
   clientId: process.env.CLIENT_ID as string,
   guildId: process.env.GUILD_ID as string,
   mongoUri: process.env.MONGO_URI as string,
+  prefix: process.env.PREFIX as string,
 };
