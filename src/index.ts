@@ -4,6 +4,7 @@ import path from 'path';
 
 import { config } from './config';
 import { connectDatabase } from './utils/database';
+import Languages from "./utils/Languages";
 
 export interface ExtendedClient extends Client {
   slashCommands: Collection<string, any>;
@@ -24,36 +25,39 @@ client.prefixCommands = new Collection();
 client.buttons = new Collection();
 
 // Load slash commands
-const slashCommandFiles = fs.readdirSync(path.join(__dirname, 'commands', 'slash')).filter(file => file.endsWith('.ts'));
-for (const file of slashCommandFiles) {
-  const command = require(`./commands/slash/${file}`);
-  client.slashCommands.set(command.data.name, command);
-}
+( async () => {
+  const slashCommandFiles = fs.readdirSync(path.join(__dirname, 'commands', 'slash')).filter(file => file.endsWith('.ts'));
+  for (const file of slashCommandFiles) {
+    const { default: command } = await import(`./commands/slash/${file}`);
+    client.slashCommands.set(command.data.name, command);
+  }
 
-// Load prefix commands
-const prefixCommandFiles = fs.readdirSync(path.join(__dirname, 'commands', 'prefix')).filter(file => file.endsWith('.ts'));
-for (const file of prefixCommandFiles) {
-  const command = require(`./commands/prefix/${file}`);
-  client.prefixCommands.set(command.name, command);
-}
+  // Load prefix commands
+  const prefixCommandFiles = fs.readdirSync(path.join(__dirname, 'commands', 'prefix')).filter(file => file.endsWith('.ts'));
+  for (const file of prefixCommandFiles) {
+    const { default: command } = await import(`./commands/prefix/${file}`);
+    client.prefixCommands.set(command.name, command);
+  }
 
-// Load buttons
-const buttonFiles = fs.readdirSync(path.join(__dirname, 'buttons')).filter(file => file.endsWith('.ts'));
-for (const file of buttonFiles) {
-  const button = require(`./buttons/${file}`);
-  client.buttons.set(button.customId, button);
-}
+  // Load buttons
+  const buttonFiles = fs.readdirSync(path.join(__dirname, 'buttons')).filter(file => file.endsWith('.ts'));
+  for (const file of buttonFiles) {
+    const { default: button } = await import(`./buttons/${file}`);
+    client.buttons.set(button.customId, button);
+  }
 
-// Load events
-const eventFiles = fs.readdirSync(path.join(__dirname, 'events')).filter(file => file.endsWith('.ts'));
-for (const file of eventFiles) {
-  const event = require(`./events/${file}`);
-  if (event.once) {
-    client.once(event.name, (...args) => event.execute(...args));
-  } else {
-    client.on(event.name, (...args) => event.execute(...args));
+  // Load events
+  const eventFiles = fs.readdirSync(path.join(__dirname, 'events')).filter(file => file.endsWith('.ts'));
+  for (const file of eventFiles) {
+    const { default: event } = await import(`./events/${file}`);
+    if (event.once) {
+      client.once(event.name, (...args) => event.execute(...args));
+    } else {
+      client.on(event.name, (...args) => event.execute(...args));
+    }
   }
 }
+)();
 
 // Handle interactions (slash commands and buttons)
 client.on('interactionCreate', async interaction => {
@@ -65,7 +69,7 @@ client.on('interactionCreate', async interaction => {
       await command.execute(interaction);
     } catch (error) {
       console.error(error);
-      await interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true });
+      await interaction.reply({ content: Languages.error.commands[config.language], ephemeral: true });
     }
   } else if (interaction.isButton()) {
     const button = client.buttons.get(interaction.customId);
@@ -75,7 +79,7 @@ client.on('interactionCreate', async interaction => {
       await button.execute(interaction);
     } catch (error) {
       console.error(error);
-      await interaction.reply({ content: 'There was an error while processing this button!', ephemeral: true });
+      await interaction.reply({ content: Languages.error.buttons[config.language], ephemeral: true });
     }
   }
 });
@@ -97,7 +101,7 @@ client.on('messageCreate', message => {
     command.execute(message, args);
   } catch (error) {
     console.error(error);
-    message.reply('There was an error trying to execute that command!');
+    message.reply(Languages.error.invalid_command[config.language]);
   }
 });
 

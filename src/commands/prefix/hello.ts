@@ -1,6 +1,6 @@
 import { Message } from 'discord.js';
 
-module.exports = {
+export default {
   name: 'hello',
   description: 'Replies with a greeting',
   execute(message: Message, args: string[]) {
