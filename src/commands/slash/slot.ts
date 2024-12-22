@@ -47,7 +47,7 @@ class SlotCommand extends BaseCommand {
             
             await interaction.reply({ content: `
 ╔═- ${message}
-║ Баланс: ${user.balance}
+║ ${user.username}: ${user.balance}
 ╚═-[${slot1}]-[${slot2}]-[${slot3}]-
             ` });
 
