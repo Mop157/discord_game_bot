@@ -1,26 +1,22 @@
-const Languages: LanguagesType = {
-    "games": {
-        "slots": {
-            "victory_1": {
-                "UA": "перемога, вітаю!",
-                "RU": "Уфф, победа, поздравляю!",
-                "EN": "victory, congratulations!",
-                "CZ": "vítězství, gratuluji!"
-            },
-            "victory_2": {
-                "UA": "Майже готово, спробуйте ще раз!",
-                "RU": "Почти получилось, попробуй еще раз!",
-                "EN": "Almost there, try again!",
-                "CZ": "Už je to skoro, zkuste to znovu!"
-            },
-            "defeat": {
-                "UA": "Не пощастило, пощастить наступного разу.",
-                "RU": "Неудача, в следующий раз повезет.",
-                "EN": "Bad luck, better luck next time.",
-                "CZ": "Smůla, příště více štěstí."
-            }
-        }
+interface LanguagesType {
+    "Database": {
+        [key: string]: {
+            [key: string]: string;
+        };
     },
+    "error": {
+        [key: string]: {
+            [key: string]: string;
+        };
+    },
+    "read": {
+        [key: string]: {
+            [key: string]: string;
+        };
+    }
+}
+
+const Languages: LanguagesType = {
 
     "Database": {
         "connection": {
@@ -90,31 +86,6 @@ const Languages: LanguagesType = {
             "CZ": "Chyba při obnovování příkazů aplikace (/):"
         }
 
-    }
-}
-
-interface LanguagesType {
-    "games": {
-        [key: string]: {
-            [key: string]: {
-                [key: string]: string;
-            };
-        };
-    },
-    "Database": {
-        [key: string]: {
-            [key: string]: string;
-        };
-    },
-    "error": {
-        [key: string]: {
-            [key: string]: string;
-        };
-    },
-    "read": {
-        [key: string]: {
-            [key: string]: string;
-        };
     }
 }
 

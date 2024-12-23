@@ -69,7 +69,7 @@ client.on('interactionCreate', async interaction => {
       await command.execute(interaction);
     } catch (error) {
       console.error(error);
-      await interaction.reply({ content: Languages.error.commands[config.language], ephemeral: true });
+      await interaction.reply({ content: Languages.error.commands[config.language || "EN"], ephemeral: true });
     }
   } else if (interaction.isButton()) {
     const button = client.buttons.get(interaction.customId);
@@ -79,7 +79,7 @@ client.on('interactionCreate', async interaction => {
       await button.execute(interaction);
     } catch (error) {
       console.error(error);
-      await interaction.reply({ content: Languages.error.buttons[config.language], ephemeral: true });
+      await interaction.reply({ content: Languages.error.buttons[config.language || "EN"], ephemeral: true });
     }
   }
 });
@@ -101,7 +101,7 @@ client.on('messageCreate', message => {
     command.execute(message, args);
   } catch (error) {
     console.error(error);
-    message.reply(Languages.error.invalid_command[config.language]);
+    message.reply(Languages.error.invalid_command[config.language || "EN"]);
   }
 });
 
