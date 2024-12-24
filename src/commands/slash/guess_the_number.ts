@@ -32,7 +32,7 @@ class GuessNumberCommand extends BaseCommand {
     this.data = new SlashCommandBuilder()
       .setName(setting.gameName)
       .setDescription(setting.gameDescription)
-    this.slots = {} // create game slots
+    this.slots = {}
   }
 
   async execute(interaction: CommandInteraction) {
@@ -46,55 +46,21 @@ class GuessNumberCommand extends BaseCommand {
 
     const userId: string = interaction.user.id;
     this.slots[userId] = { 
-      user: [], // initialize user's slots
+      user: [],
       number: this.getRandomNumber(setting.randomNumber.min, setting.randomNumber.max) // generate random number
-    }; // initialize user's slots
-    // this.slots[userId].user = []; 
-    // this.slots[userId].number = 
+    };
     let attempts: number = 3;
-    
-    await interaction.reply({ content: `
+    let textstart: string = `
 ${LanguagesGame.rules[config.language]}
 
-- 🎉 (1) - ${setting.prizelist.prize1}
-- 🔴 (± ${setting.radius.radius1}) - ${setting.prizelist.prize2}
-- 🟥 (± ${setting.radius.radius2}) - ${setting.prizelist.prize3}
-- 🟧 (± ${setting.radius.radius3}) - ${setting.prizelist.prize4}
-- 🟨 (± ${setting.radius.radius4}) - ${setting.prizelist.prize5}
-- 🟩 (± 100) - ${setting.prizelist.prize6}
-      ` });
+- ${setting.emojis.WIN}  (1) - ${setting.prizelist.prize1}
+- ${setting.emojis.CLOSE}  (± ${setting.radius.radius1}) - ${setting.prizelist.prize2}
+- ${setting.emojis.NEAR}  (± ${setting.radius.radius2}) - ${setting.prizelist.prize3}
+- ${setting.emojis.FAR}  (± ${setting.radius.radius3}) - ${setting.prizelist.prize4}
+- ${setting.emojis.VERY_FAR}  (± ${setting.radius.radius4}) - ${setting.prizelist.prize5}
+- ${setting.emojis.RANDOM}  (± ${setting.randomNumber.max}) - ${setting.prizelist.prize6}`
 
-    await new Promise( resolve => setTimeout(resolve, 5000) ); // timeout for 5 seconds
-
-    await interaction.editReply({ content: `
-╔════════-----[${LanguagesGame.name[config.language]}]-
-╠═══╣${interaction.user}╠--
-║
-╠══ ?
-║
-╠═ ?
-║
-╠ ?
-║
-╠═══[3]═-
-╚══════════════---
-      ` })
-
-    try {
-      while (attempts > 0) {
-
-        const message = await this.channelmessage(interaction, userId, setting.time); // get user's message
-
-        if (message) {
-          const { content, error, end }: verifyNumber = await this.verify(parseInt(message.content), userId); // verify user's input
-
-          if (error) { // error in user's input
-            await interaction.followUp({ content, ephemeral: true });
-            continue;
-
-          } attempts--
-
-          await interaction.editReply({ content: `
+    const textgame = (content: string): string => `
 ╔════════-----[${LanguagesGame.name[config.language]}]-
 ╠═══╣${interaction.user}╠--
 ║
@@ -107,30 +73,57 @@ ${LanguagesGame.rules[config.language]}
 ╠═══[${attempts}]═-
 ╚══════════════---
 >${content}<
-            ` });
+`
+    
+    await interaction.reply({ content: textstart });
 
-          if (end) break; // end of interaction
+    await new Promise( resolve => setTimeout(resolve, 5000) ); // timeout for 5 seconds
+
+    await interaction.editReply({ content: textgame("?") })
+
+    try {
+      while (attempts--) {
+
+        const message = await this.channelmessage(interaction, userId, setting.time); // get user's message
+
+        if (message) {
+          const { content, error, end }: verifyNumber = await this.verify(parseInt(message.content), userId); // verify user's input
+
+          if (error) {
+            await interaction.followUp({ content, ephemeral: true });
+            continue;
+
+          }
+
+          await interaction.editReply({ content: textgame(content) });
+
+          if (end) break;
           
         }
       }
       const user = await this.userbalance(interaction.user.id, interaction.user.username) // update user's balance
 
       if (!user) {
-        await interaction.reply(Languages.Database.error_save_user[config.language || "EN"]);
+        await interaction.followUp({ content: Languages.Database.error_save_user[config.language || "EN"], ephemeral: true });
         return;
       }
-      console.log(this.slots[userId].number)
-      delete this.slots[userId]; // remove user from slots
+      delete this.slots[userId];
       await interaction.followUp({ content: `${LanguagesGame.upbalance[config.language]} ${user.balance}`, ephemeral: true });
 
     } catch (error) { // error timeout
-      delete this.slots[userId]; // remove user from slots
+      delete this.slots[userId]; 
       await interaction.followUp(LanguagesGame.errorTime[config.language]);
     }
   }
 
-  private async verify(guess: number, userId: string): Promise<verifyNumber> {
-    const difference = Math.abs(this.slots[userId].number - guess);
+  private async verify(guess: number, userId: string): Promise<any> {
+    const radiusMapping = [
+      { radius: setting.radius.radius1, emoji: setting.emojis.CLOSE, message: LanguagesGame.radius3[config.language] },
+      { radius: setting.radius.radius2, emoji: setting.emojis.NEAR, message: LanguagesGame.radius15[config.language] },
+      { radius: setting.radius.radius3, emoji: setting.emojis.FAR, message: LanguagesGame.radius40[config.language] },
+      { radius: setting.radius.radius4, emoji: setting.emojis.VERY_FAR, message: LanguagesGame.radius70[config.language] },
+      { radius: setting.randomNumber.max, emoji: setting.emojis.RANDOM, message: LanguagesGame.radius100[config.language] }
+    ]
 
     if (isNaN(guess)) {
       return { content: LanguagesGame.errorNumber[config.language], error: true };
@@ -145,41 +138,30 @@ ${LanguagesGame.rules[config.language]}
       this.slots[userId].user.push(`${guess} | 🎉`)
       return { content: LanguagesGame.radius1[config.language], error: false, end: true };
 
-    } else if (difference <= setting.radius.radius1) {
-      this.slots[userId].user.push(`${guess} | 🔴`)
-      return { content: LanguagesGame.radius3[config.language], error: false };
-
-    } else if (difference <= setting.radius.radius2) {
-      this.slots[userId].user.push(`${guess} | 🟥`)
-      return { content: LanguagesGame.radius15[config.language], error: false };
-
-    } else if (difference <= setting.radius.radius3) {
-      this.slots[userId].user.push(`${guess} | 🟧`)
-      return { content: LanguagesGame.radius40[config.language], error: false };
-
-    } else if (difference <= setting.radius.radius4) {
-      this.slots[userId].user.push(`${guess} | 🟨`)
-      return { content: LanguagesGame.radius70[config.language], error: false };
-
-    } else {
-      this.slots[userId].user.push(`${guess} | 🟩`)
-      return { content: LanguagesGame.radius100[config.language], error: false };
+    }
+    const difference = Math.abs(this.slots[userId].number - guess);
+    for (const { radius, emoji, message } of radiusMapping) {
+      if (difference <= radius) {
+        this.slots[userId].user.push(`${guess} | ${emoji}`);
+        return { content: message, error: false };
+      }
     }
   }
 
   private async userbalance(userId: string, username: string) {
     const prizelist: prizetype = {
-      "🎉": setting.prizelist.prize1,
-      "🔴": setting.prizelist.prize2,
-      "🟥": setting.prizelist.prize3,
-      "🟧": setting.prizelist.prize4,
-      "🟨": setting.prizelist.prize5,
-      "🟩": setting.prizelist.prize6,
-    } // prize user balance
+      [setting.emojis.WIN]: setting.prizelist.prize1,
+      [setting.emojis.CLOSE]: setting.prizelist.prize2,
+      [setting.emojis.NEAR]: setting.prizelist.prize3,
+      [setting.emojis.FAR]: setting.prizelist.prize4,
+      [setting.emojis.VERY_FAR]: setting.prizelist.prize5,
+      [setting.emojis.RANDOM]: setting.prizelist.prize6,
+    }; // prize user balance
     try {
       let balanse: number = this.slots[userId].user
       .map((slot) => prizelist[slot.slice(slot.length - 2)])
-      .reduce((a, b) => a + b, 0); // calculate user's balance
+      .reduce((a, b) => a + b, 0);
+      console.log(balanse);
 
       return await this.updateUserBalance(userId, username, balanse) // update user
 

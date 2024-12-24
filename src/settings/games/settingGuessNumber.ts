@@ -7,18 +7,26 @@ interface SettingType {
         max: number;
     }
     radius: {
-        radius1: number
-        radius2: number
-        radius3: number
-        radius4: number
+        radius1: number;
+        radius2: number;
+        radius3: number;
+        radius4: number;
     }
     prizelist: {
-        prize1: number
-        prize2: number
-        prize3: number
-        prize4: number
-        prize5: number
-        prize6: number
+        prize1: number;
+        prize2: number;
+        prize3: number;
+        prize4: number;
+        prize5: number;
+        prize6: number;
+    }
+    emojis: {
+        WIN: string;
+        CLOSE: string;
+        NEAR: string;
+        FAR: string;
+        VERY_FAR: string;
+        RANDOM: string;
     }
     time: number;
 
@@ -51,11 +59,19 @@ export const setting: SettingType = {
     },
     prizelist: {
         prize1: 250,
-        prize2: 100,
-        prize3: 40,
-        prize4: 0,
-        prize5: -25,
-        prize6: -50
+        prize2: 50,
+        prize3: 0,
+        prize4: -25,
+        prize5: -50,
+        prize6: -75
+    },
+    emojis: {
+        WIN: "🎉",
+        CLOSE: "🔴",
+        NEAR: "🟥",
+        FAR: "🟧",
+        VERY_FAR: "🟨",
+        RANDOM: "🟩",
     },
     time: 180000, // 3 minutes (180000 milliseconds)
 
