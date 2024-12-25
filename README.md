@@ -1,4 +1,4 @@
-<details align="center">
+<details>
   <summary><h2>Українська</h2></summary>
   
 <div align="center">
@@ -190,7 +190,7 @@ LANGUAGES=language // "UA" or "RU" or "EN" or "CZ"
 
 
 
-<details align="center">
+<details>
   <summary><h2>English</h2></summary>
   
 <div align="center">
@@ -288,7 +288,7 @@ LANGUAGES=language // "UA" or "RU" or "EN" or "CZ"
 
 
 
-<details align="center">
+<details>
   <summary><h2>Čeština</h2></summary>
   
 <div align="center">
