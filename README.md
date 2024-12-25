@@ -93,7 +93,7 @@ LANGUAGES=language // "UA" or "RU" or "EN" or "CZ"
 
 
 
-<details align="center">
+<details>
   <summary><h2>Русский</h2></summary>
   
 <div align="center">
