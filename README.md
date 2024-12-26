@@ -39,7 +39,7 @@
       <pre><code>git clone https://github.com/Mop157/discord_game_bot.git</code></pre>
     </li>
     <li>Перехід до директорії проєкту:
-      <pre><code>cd discord-game-bot</code></pre>
+      <pre><code>cd discord_game_bot</code></pre>
     </li>
     <li>Встановлення залежностей:
       <pre><code>npm install</code></pre>
@@ -134,7 +134,7 @@ LANGUAGES=language // "UA" or "RU" or "EN" or "CZ"
       <pre><code>git clone https://github.com/Mop157/discord_game_bot.git</code></pre>
     </li>
     <li>Перейдите в директорию проекта:
-      <pre><code>cd discord-game-bot</code></pre>
+      <pre><code>cd discord_game_bot</code></pre>
     </li>
     <li>Установите зависимости:
       <pre><code>npm install</code></pre>
@@ -231,7 +231,7 @@ LANGUAGES=language // "UA" or "RU" or "EN" or "CZ"
       <pre><code>git clone https://github.com/Mop157/discord_game_bot.git</code></pre>
     </li>
     <li>Navigate to the project directory:
-      <pre><code>cd discord-game-bot</code></pre>
+      <pre><code>cd discord_game_bot</code></pre>
     </li>
     <li>Install dependencies:
       <pre><code>npm install</code></pre>
@@ -329,7 +329,7 @@ LANGUAGES=language // "UA" or "RU" or "EN" or "CZ"
       <pre><code>git clone https://github.com/Mop157/discord_game_bot.git</code></pre>
     </li>
     <li>Přesuňte se do adresáře projektu:
-      <pre><code>cd discord-game-bot</code></pre>
+      <pre><code>cd discord_game_bot</code></pre>
     </li>
     <li>Nainstalujte závislosti:
       <pre><code>npm install</code></pre>
@@ -356,7 +356,7 @@ LANGUAGES=language // "UA" or "RU" or "EN" or "CZ"
       </li>
       <li>Pozvěte bota na váš Discord server pomocí odkazu s potřebnými oprávněními.</li>
       <li>Používejte slash příkazy k interakci s botem. Například:
-        <pre><code>/slot - для гри в слот-машину</code></pre>
+        <pre><code>/slot - pro hraní slotové hry</code></pre>
       </li>
     </ol>
 
