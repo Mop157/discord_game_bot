@@ -25,7 +25,7 @@ interface game {
 
 class GuessNumberCommand extends BaseCommand {
   data: SlashCommandBuilder;
-  slots: game;
+  private slots: game;
 
   constructor() {
     super();
@@ -161,7 +161,6 @@ ${LanguagesGame.rules[config.language]}
       let balanse: number = this.slots[userId].user
       .map((slot) => prizelist[slot.slice(slot.length - 2)])
       .reduce((a, b) => a + b, 0);
-      console.log(balanse);
 
       return await this.updateUserBalance(userId, username, balanse) // update user
 

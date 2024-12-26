@@ -23,7 +23,7 @@ interface LanguagesType {
 export const setting: SettingType = {
     // magic 8 (/8ball)
 
-    game: true,
+    game: true, // turn the game on or off
 
     gameName: '8ball',
     gameDescription: 'ask a question to the magic 8!',

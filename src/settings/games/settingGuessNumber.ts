@@ -42,7 +42,7 @@ export const setting: SettingType = {
 
     // Guess the number (/guess_the_number)
     
-    game: true,
+    game: true, // turn the game on or off
 
     gameName: 'guess_the_number',
     gameDescription: 'try to guess the number!',
@@ -51,13 +51,13 @@ export const setting: SettingType = {
         min: 0, // minimal random number
         max: 100 // maximum random number
     },
-    radius: {
+    radius: { // radius for numbers in the game
         radius1: 3,
         radius2: 15,
         radius3: 40,
         radius4: 70
     },
-    prizelist: {
+    prizelist: { // prizes for numbers in the game
         prize1: 250,
         prize2: 50,
         prize3: 0,
@@ -65,7 +65,7 @@ export const setting: SettingType = {
         prize5: -50,
         prize6: -75
     },
-    emojis: {
+    emojis: { // emojis for radius in the game
         WIN: "🎉",
         CLOSE: "🔴",
         NEAR: "🟥",

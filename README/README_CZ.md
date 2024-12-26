@@ -15,7 +15,7 @@ Discord Game Bot je vícejazyčný herní bot pro Discord, který je aktuálně 
 
 1. Klonujte repozitář:
    ```
-   git clone https://github.com/your-username/discord-game-bot.git
+   git clone https://github.com/Mop157/discord_game_bot.git
    ```
 
 2. Přesuňte se do adresáře projektu:

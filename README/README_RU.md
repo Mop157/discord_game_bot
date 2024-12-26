@@ -14,12 +14,12 @@ Discord Game Bot - это многоязычный игровой бот для 
 
 1. Клонируйте репозиторий:
    ```
-   git clone https://github.com/your-username/discord-game-bot.git
+   git clone https://github.com/Mop157/discord_game_bot.git
    ```
 
 2. Перейдите в директорию проекта:
    ```
-   cd discord-game-bot
+   cd discord_game_bot
    ```
 
 3. Установите зависимости:
