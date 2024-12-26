@@ -36,7 +36,7 @@
 <h2>Встановлення</h2>
   <ol>
     <li>Клонування репозиторію:
-      <pre><code>git clone https://github.com/your-username/discord-game-bot.git</code></pre>
+      <pre><code>git clone https://github.com/Mop157/discord_game_bot.git</code></pre>
     </li>
     <li>Перехід до директорії проєкту:
       <pre><code>cd discord-game-bot</code></pre>
@@ -131,7 +131,7 @@ LANGUAGES=language // "UA" or "RU" or "EN" or "CZ"
 <h2>Установка</h2>
   <ol>
     <li>Клонируйте репозиторий:
-      <pre><code>git clone https://github.com/your-username/discord-game-bot.git</code></pre>
+      <pre><code>git clone https://github.com/Mop157/discord_game_bot.git</code></pre>
     </li>
     <li>Перейдите в директорию проекта:
       <pre><code>cd discord-game-bot</code></pre>
@@ -228,7 +228,7 @@ LANGUAGES=language // "UA" or "RU" or "EN" or "CZ"
 <h2>Installation</h2>
   <ol>
     <li>Clone the repository:
-      <pre><code>git clone https://github.com/your-username/discord-game-bot.git</code></pre>
+      <pre><code>git clone https://github.com/Mop157/discord_game_bot.git</code></pre>
     </li>
     <li>Navigate to the project directory:
       <pre><code>cd discord-game-bot</code></pre>
@@ -326,7 +326,7 @@ LANGUAGES=language // "UA" or "RU" or "EN" or "CZ"
 <h2>Instalace</h2>
   <ol>
     <li>Klonujte repozitář:
-      <pre><code>git clone https://github.com/your-username/discord-game-bot.git</code></pre>
+      <pre><code>git clone https://github.com/Mop157/discord_game_bot.git</code></pre>
     </li>
     <li>Přesuňte se do adresáře projektu:
       <pre><code>cd discord-game-bot</code></pre>
